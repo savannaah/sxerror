@@ -2,7 +2,7 @@ package sxerror
 
 import "regexp"
 
-type sxError struct {
+type SxError struct {
 	code string
 	message string
 }
@@ -28,24 +28,24 @@ func New(code string, message string) error {
 	if !matched {
 		panic("unrecognised error code. expected pattern: SX[IWSB][0-9]{6}$")
 	}
-	return &sxError{code: code, message: message}
+	return &SxError{code: code, message: message}
 }
 
-func (e *sxError) Error() string {
+func (e *SxError) Error() string {
 	if e != nil {
 		return e.code + ": " + e.message
 	}
 	return ""
 }
 
-func (e *sxError) Code() string {
+func (e *SxError) Code() string {
 	if e != nil {
 		return e.code
 	}
 	return ""
 }
 
-func (e *sxError) Message() string {
+func (e *SxError) Message() string {
 	if e != nil {
 		return e.message
 	}
