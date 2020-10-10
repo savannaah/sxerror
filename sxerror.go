@@ -1,6 +1,9 @@
 package sxerror
 
-import "regexp"
+import (
+	"regexp"
+	"fmt"
+)
 
 // An SxError represents an error that might occur in savannaah gRPC servers
 type SxError struct {
@@ -11,14 +14,19 @@ type SxError struct {
 	description string // full description of the error
 }
 
-func New(code string, fileName, lineNumber, title, description string) error {
-	matched, err := regexp.MatchString("SX[IWSB][A-Z]{3}[0-9]{6}$",code)
+func New(code, fileName, lineNumber, description string) error {
+	matched, err := regexp.MatchString("SX[DIWSB][A-Z]{3}[0-9]{6}$",code)
 	if err != nil {
 		panic("something went wrong while creating regex")
 	}
 	if !matched {
-		panic("unrecognised error code. expected pattern: SX[IWSB][0-9]{6}$")
+		panic("unrecognised error code. expected pattern: SX[DIWSB][A-Z]{3}[0-9]{6}$")
 	}
+	title, ok := errorTitle[code[len(code)-6:]]
+	if !ok {
+		panic(fmt.Sprintf("unknown error digit. please make an entry for %s",code[len(code)-6:]) )
+	}
+
 	return &SxError{code,fileName, lineNumber, title, description}
 }
 
