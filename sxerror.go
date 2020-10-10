@@ -2,38 +2,29 @@ package sxerror
 
 import "regexp"
 
+// An SxError represents an error that might occur in savannaah gRPC servers
 type SxError struct {
-	code string
-	message string
+	code string // code to describe the error
+	fileName string // filename where the error has occurred
+	lineNumber string // line number where the error has occurred
+	title string // title of the error
+	description string // full description of the error
 }
 
-/*
-	Error code pattern: SX[IWSB][0-9]{6}$
-    =============================================
-	First two character is reserved for SAVANNAAH
-	Third character is for error level
-	I = info
-    W = warning
-    S = severe - internal errors
-    B = business - error made by users
-	First three digits is used to identify the micro service
-    Last three digits is used to identify specific kind of error
- */
-
-func New(code string, message string) error {
-	matched, err := regexp.MatchString("SX[IWSB][0-9]{6}$",code)
+func New(code string, fileName, lineNumber, title, description string) error {
+	matched, err := regexp.MatchString("SX[IWSB][A-Z]{3}[0-9]{6}$",code)
 	if err != nil {
 		panic("something went wrong while creating regex")
 	}
 	if !matched {
 		panic("unrecognised error code. expected pattern: SX[IWSB][0-9]{6}$")
 	}
-	return &SxError{code: code, message: message}
+	return &SxError{code,fileName, lineNumber, title, description}
 }
 
 func (e *SxError) Error() string {
 	if e != nil {
-		return e.code + ": " + e.message
+		return e.code + " - " + e.title
 	}
 	return ""
 }
@@ -45,9 +36,30 @@ func (e *SxError) Code() string {
 	return ""
 }
 
-func (e *SxError) Message() string {
+func (e *SxError) FileName() string {
 	if e != nil {
-		return e.message
+		return e.fileName
+	}
+	return ""
+}
+
+func (e *SxError) LineNumber() string {
+	if e != nil {
+		return e.lineNumber
+	}
+	return ""
+}
+
+func (e *SxError) Title() string {
+	if e != nil {
+		return e.title
+	}
+	return ""
+}
+
+func (e *SxError) Description() string {
+	if e != nil {
+		return e.description
 	}
 	return ""
 }
