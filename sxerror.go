@@ -32,7 +32,7 @@ func New(code, fileName, lineNumber, description string) error {
 
 func (e *SxError) Error() string {
 	if e != nil {
-		return e.code + " - " + e.title
+		return fmt.Sprintf(`{"code":"%s", "fileName":"%s", "lineNumber":"%s", "title":"%s", "description":"%s"}`, e.code, e.fileName, e.lineNumber, e.title, e.description)
 	}
 	return ""
 }
