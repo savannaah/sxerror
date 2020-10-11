@@ -23,6 +23,7 @@ Characters to identify micro service:
 
 | Service | Characters |
 | :------ | :--------- |
+| token-package | AAA |
 | session-server | SES |
 | master-server | MAS |
 | relatedrecord-server | REL |

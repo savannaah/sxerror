@@ -53,11 +53,11 @@ func (e *SxError) FileName() string {
 	return ""
 }
 
-func (e *SxError) LineNumber() string {
+func (e *SxError) LineNumber() int {
 	if e != nil {
 		return e.lineNumber
 	}
-	return ""
+	return 0
 }
 
 func (e *SxError) Title() string {
