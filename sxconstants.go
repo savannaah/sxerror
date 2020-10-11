@@ -1,6 +1,7 @@
 package sxerror
 
 var errorTitle = map[string]string {
+	"000000": "unexpected error",
 	"000001": "failed to connect to the database",
 	"000002": "failed to ping the database",
 	"000003": "failed to query the database",
@@ -12,7 +13,7 @@ var errorTitle = map[string]string {
 	"001005": "token seems to be corrupted",
 	"001006": "base64 encoded string seems to be corrupted",
 
-	"100001": "record does not exits in the database",
+	"100001": "record(s) does not exits in the database",
 	"100002": "unauthorised to create a record",
 	"100003": "unauthorised to access the requested data",
 	"100004": "unauthorised to update the record",
@@ -31,4 +32,5 @@ var errorTitle = map[string]string {
 	"100017": "mandatory field violation",
 	"100018": "unique field violation",
 	"100019": "character limit violation",
+	"100020": "no field has been changed",
 }

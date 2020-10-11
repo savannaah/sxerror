@@ -3,18 +3,19 @@ package sxerror
 import (
 	"regexp"
 	"fmt"
+	"runtime"
 )
 
 // An SxError represents an error that might occur in savannaah gRPC servers
 type SxError struct {
 	code string // code to describe the error
 	fileName string // filename where the error has occurred
-	lineNumber string // line number where the error has occurred
+	lineNumber int // line number where the error has occurred
 	title string // title of the error
 	description string // full description of the error
 }
 
-func New(code, fileName, lineNumber, description string) error {
+func New(code, description string) error {
 	matched, err := regexp.MatchString("SX[DIWSB][A-Z]{3}[0-9]{6}$",code)
 	if err != nil {
 		panic("something went wrong while creating regex")
@@ -26,13 +27,14 @@ func New(code, fileName, lineNumber, description string) error {
 	if !ok {
 		panic(fmt.Sprintf("unknown error digit. please make an entry for %s",code[len(code)-6:]) )
 	}
+	_, fileName, lineNumber, _ := runtime.Caller(1)
 
 	return &SxError{code,fileName, lineNumber, title, description}
 }
 
 func (e *SxError) Error() string {
 	if e != nil {
-		return fmt.Sprintf(`{"code":"%s", "fileName":"%s", "lineNumber":"%s", "title":"%s", "description":"%s"}`, e.code, e.fileName, e.lineNumber, e.title, e.description)
+		return fmt.Sprintf(`{"code":"%s", "fileName":"%s", "lineNumber":%d, "title":"%s", "description":"%s"}`, e.code, e.fileName, e.lineNumber, e.title, e.description)
 	}
 	return ""
 }
