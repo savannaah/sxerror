@@ -28,7 +28,9 @@ Characters to identify micro service:
 | master-server | MAS |
 | relatedrecord-server | REL |
 | profile-server | PRO |
-| organisation-server | ORG |
+| warehouse-server | WAR |
+| employee-server | EMP |
+| vendor-server | VEN |
 
 Digits to identify the exact error:
 
