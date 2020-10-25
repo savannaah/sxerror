@@ -69,3 +69,8 @@ Digits to identify the exact error:
 | 100017 | mandatory field violation | NA |
 | 100018 | unique field violation | NA |
 | 100019 | character limit violation | NA |
+| 100020 | incorrect datetime format | NA |
+| 100021 | image size limit violation |  NA |
+| 100022 | datetime limit violation | NA |
+| 100023 | incorrect enum value | NA |
+| 100024 | repeating value violation | NA |
