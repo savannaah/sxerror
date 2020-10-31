@@ -74,3 +74,4 @@ Digits to identify the exact error:
 | 100022 | datetime limit violation | NA |
 | 100023 | incorrect enum value | NA |
 | 100024 | repeating value violation | NA |
+| 100025 | domain value is not recognised | NA |
